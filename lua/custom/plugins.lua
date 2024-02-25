@@ -52,15 +52,15 @@ local plugins = {
       require("nvim-ts-autotag").setup()
     end,
   },
-  {
-    "okuuva/auto-save.nvim",
-    cmd = "ASToggle",                       -- optional for lazy loading on command
-    event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
-    opts = {
-      -- your config goes here
-      -- or just leave it empty :)
-    },
-  },
+  -- {
+  --   "okuuva/auto-save.nvim",
+  --   cmd = "ASToggle",                       -- optional for lazy loading on command
+  --   event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
+  --   opts = {
+  --     -- your config goes here
+  --     -- or just leave it empty :)
+  --   },
+  -- },
   {
     "kdheepak/lazygit.nvim",
     -- optional for floating window border decoration
@@ -70,7 +70,20 @@ local plugins = {
   },
   {
     "christoomey/vim-tmux-navigator",
-    lazy = false,
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+    },
+    keys = {
+      { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    },
   }
 }
 
