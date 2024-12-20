@@ -84,7 +84,36 @@ local plugins = {
       { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
-  }
+  },
+  -- Add Dart/Flutter-specific plugins
+  {
+    "akinsho/flutter-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "stevearc/dressing.nvim" },
+    config = function()
+      require("flutter-tools").setup({
+        lsp = {
+          on_attach = require("custom.configs.lsp").on_attach,
+          capabilities = require("custom.configs.lsp").capabilities,
+        },
+        indent = {
+          enable = true,
+          disable = {
+            "dart"
+          },
+        },
+      })
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig", -- LSP setup
+    config = function()
+      local lspconfig = require("lspconfig")
+      lspconfig.dartls.setup({
+        on_attach = require("custom.configs.lsp").on_attach,
+        capabilities = require("custom.configs.lsp").capabilities,
+      })
+    end,
+  },
 }
 
 return plugins
