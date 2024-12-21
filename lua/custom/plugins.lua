@@ -91,6 +91,10 @@ local plugins = {
     dependencies = { "nvim-lua/plenary.nvim", "stevearc/dressing.nvim" },
     config = function()
       require("flutter-tools").setup({
+        flutter_path = "/home/mkmalik/development/flutter/bin/flutter", -- Optional: specify the path if it's not in your PATH
+        widget_guides = {
+          enabled = true, -- Enable widget guides
+        },
         lsp = {
           on_attach = require("custom.configs.lsp").on_attach,
           capabilities = require("custom.configs.lsp").capabilities,

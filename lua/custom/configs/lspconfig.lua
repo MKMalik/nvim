@@ -21,8 +21,11 @@ lspconfig.astro.setup({
 
 -- Configure Dart LSP
 lspconfig.dartls.setup {
-    cmd = { "dart", "language-server", "--protocol=lsp" },
-    on_attach = function(client, bufnr)
-        print("Dart LSP attached")
-    end,
+  cmd = { "dart", "language-server", "--protocol=lsp" },
+  root_dir = require('lspconfig').util.root_pattern('pubspec.yaml'),
+  on_attach = function(client, bufnr)
+      print("Dart LSP attached")
+  end,
 }
+
+require('lspconfig').flutter.setup{}
