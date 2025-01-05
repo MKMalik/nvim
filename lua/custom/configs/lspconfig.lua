@@ -5,6 +5,7 @@ local capabilities = base.capabilities
 local lspconfig = require("lspconfig")
 
 lspconfig.ts_ls.setup({
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" }, -- Limit tsserver to JS/TS
   on_attach = on_attach,
   capabilities = capabilities
 })
@@ -19,6 +20,8 @@ lspconfig.astro.setup({
   capabilities = capabilities
 })
 
+lspconfig.jdtls.setup({})
+
 -- Configure Dart LSP
 lspconfig.dartls.setup {
   cmd = { "dart", "language-server", "--protocol=lsp" },
@@ -29,3 +32,4 @@ lspconfig.dartls.setup {
 }
 
 require('lspconfig').flutter.setup{}
+require('java').setup();

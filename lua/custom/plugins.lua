@@ -4,6 +4,7 @@ local plugins = {
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
+      require("java").setup()
     end,
   },
   {
@@ -116,6 +117,36 @@ local plugins = {
         on_attach = require("custom.configs.lsp").on_attach,
         capabilities = require("custom.configs.lsp").capabilities,
       })
+    end,
+  },
+  -- java
+  -- Add LSP support
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+    },
+    config = function()
+      require("mason").setup()
+      require("mason-lspconfig").setup {
+        ensure_installed = { "jdtls" },
+      }
+    end,
+  },
+
+  -- Add Java-specific configuration
+  {
+    "mfussenegger/nvim-jdtls",
+    ft = { "java" }, -- Load only for Java files
+  },
+
+  -- Debugging
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = { "rcarriga/nvim-dap-ui" },
+    config = function()
+      require("dapui").setup()
     end,
   },
 }
