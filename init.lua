@@ -23,3 +23,11 @@ require "plugins"
 require('luasnip.loaders.from_vscode').lazy_load({
     paths = { "~/.config/nvim/snippets" }
 })
+
+require('lspconfig').dartls.setup({
+  on_attach = function(client, bufnr)
+    print("Dart LSP attached to buffer " .. bufnr)
+  end,
+  root_dir = require('lspconfig.util').root_pattern("pubspec.yaml", ".git"),
+})
+
