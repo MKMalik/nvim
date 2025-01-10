@@ -37,6 +37,7 @@ local plugins = {
         "typescript",
         "jsx",
         "tsx",
+        "dart",
       }
       return opts
     end,
@@ -86,29 +87,6 @@ local plugins = {
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
-  -- Add Dart/Flutter-specific plugins
-  {
-    "akinsho/flutter-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "stevearc/dressing.nvim" },
-    config = function()
-      require("flutter-tools").setup({
-        flutter_path = "/home/mkmalik/development/flutter/bin/flutter", -- Optional: specify the path if it's not in your PATH
-        widget_guides = {
-          enabled = true, -- Enable widget guides
-        },
-        lsp = {
-          on_attach = require("custom.configs.lsp").on_attach,
-          capabilities = require("custom.configs.lsp").capabilities,
-        },
-        indent = {
-          enable = true,
-          disable = {
-            "dart"
-          },
-        },
-      })
-    end,
-  },
   {
     "neovim/nvim-lspconfig", -- LSP setup
     config = function()
@@ -116,6 +94,23 @@ local plugins = {
       lspconfig.dartls.setup({
         on_attach = require("custom.configs.lsp").on_attach,
         capabilities = require("custom.configs.lsp").capabilities,
+      })
+    end,
+  },
+
+   -- Flutter and Dart tools
+  {
+    "akinsho/flutter-tools.nvim",
+    lazy = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "stevearc/dressing.nvim", -- Optional for UI improvements
+    },
+    config = function()
+      require("flutter-tools").setup({
+        lsp = {
+          capabilities = require("cmp_nvim_lsp").default_capabilities(), -- LSP capabilities
+        },
       })
     end,
   },
@@ -132,6 +127,7 @@ local plugins = {
       require("mason-lspconfig").setup {
         ensure_installed = { "jdtls" },
       }
+      require("lspconfig").dartls.setup({})
     end,
   },
 
