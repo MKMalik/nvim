@@ -176,12 +176,12 @@ local default_plugins = {
   {
     "numToStr/Comment.nvim",
     keys = {
-      { "gcc", mode = "n", desc = "Comment toggle current line" },
-      { "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
-      { "gc", mode = "x", desc = "Comment toggle linewise (visual)" },
-      { "gbc", mode = "n", desc = "Comment toggle current block" },
-      { "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
-      { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
+      { "gcc", mode = "n",          desc = "Comment toggle current line" },
+      { "gc",  mode = { "n", "o" }, desc = "Comment toggle linewise" },
+      { "gc",  mode = "x",          desc = "Comment toggle linewise (visual)" },
+      { "gbc", mode = "n",          desc = "Comment toggle current block" },
+      { "gb",  mode = { "n", "o" }, desc = "Comment toggle blockwise" },
+      { "gb",  mode = "x",          desc = "Comment toggle blockwise (visual)" },
     },
     init = function()
       require("core.utils").load_mappings "comment"
@@ -242,41 +242,18 @@ local default_plugins = {
       require("which-key").setup(opts)
     end,
   },
-   {
-    "akinsho/flutter-tools.nvim",
-    lazy = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "stevearc/dressing.nvim", -- Optional for enhanced UI
-    },
-    config = function()
-      require("flutter-tools").setup({
-        widget_guides = {
-          enabled = true, -- Enable widget guides
-        },
-        lsp = {
-          color = {
-            enabled = true, -- Enable LSP semantic highlighting
-          },
-          settings = {
-            showTodos = true,
-            completeFunctionCalls = true,
-          },
-          on_attach = function(client, bufnr)
-            local bufopts = { noremap = true, silent = true, buffer = bufnr }
-            vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-          end,
-        },
-      })
-    end,
-  },
+  require('custom.flutter'),
   {
     "dart-lang/flutter-tools.nvim",
     config = function()
       require("flutter-tools").setup()
     end,
   },
+  {
+    "hsanson/vim-android"
+  },
+  require('custom.harpoon'),
+  require('custom.alpha-nvim'),
 }
 
 local config = require("core.utils").load_config()
@@ -286,7 +263,6 @@ if #config.plugins > 0 then
 end
 
 require("lazy").setup(default_plugins, config.lazy_nvim)
-
 
 -- Flutter keymaps
 vim.api.nvim_set_keymap("n", "<leader>Fr", "<cmd>FlutterRun<CR>", { noremap = true, silent = true })
@@ -299,6 +275,3 @@ vim.api.nvim_set_keymap("n", "<leader>FT", "<cmd>FlutterRestart<CR>", { noremap 
 vim.api.nvim_set_keymap("n", "<leader>FD", "<cmd>FlutterDetach<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>Fv", "<cmd>FlutterVisualDebug<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>FT", "<cmd>FlutterLogToggle<CR>", { noremap = true, silent = true })
-
--- Add your other keymaps here if needed
-

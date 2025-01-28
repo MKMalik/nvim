@@ -27,22 +27,6 @@ local plugins = {
   --   end,
   -- },
   {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function()
-      local opts = require "plugins.configs.treesitter"
-      opts.ensure_installed = {
-        "lua",
-        "astro",
-        "javascript",
-        "typescript",
-        "jsx",
-        "tsx",
-        "dart",
-      }
-      return opts
-    end,
-  },
-  {
     "windwp/nvim-ts-autotag",
     ft = {
       "javascript",
