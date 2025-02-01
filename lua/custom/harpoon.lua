@@ -30,10 +30,8 @@ return {
   config = function()
     require("harpoon").setup({
       menu = {
-        width = 60,             -- Width of the Harpoon menu for better visibility
-        height = 10,            -- Height of the Harpoon menu to show enough entries
-        border = "rounded",     -- Add a rounded border for aesthetics
-        title = "Harpoon Menu", -- Optional: Add a title to the menu
+        width = 60,  -- Width of the Harpoon menu for better visibility
+        height = 10, -- Height of the Harpoon menu to show enough entries
       },
       global_settings = {
         save_on_toggle = true,                -- Automatically save the Harpoon list when toggling the menu

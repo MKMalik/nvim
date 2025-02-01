@@ -10,7 +10,7 @@ require("core.utils").load_mappings()
 
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
--- bootstrap lazy.nvim!
+-- bootstrap lazy.nvim! if not vim.loop.fs_stat(lazypath) then
 if not vim.loop.fs_stat(lazypath) then
   require("core.bootstrap").gen_chadrc_template()
   require("core.bootstrap").lazy(lazypath)
@@ -68,3 +68,32 @@ require('lspconfig').lua_ls.setup({});
 
 vim.opt.relativenumber = true
 vim.opt.number = true
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "LazyVimStarted",
+  callback = function()
+    local stats = require("lazy").stats()
+    if stats.count == 0 then
+      vim.cmd("Alpha")
+    end
+  end,
+});
+
+require('lspconfig').jsonls.setup({
+  settings = {
+    json = {
+      schemas = require("schemastore").json.schemas(),
+      validate = { enable = true },
+    },
+  },
+})
+-- Configure output buffer settings
+vim.g.vrc_output_buffer_name = "__OUTPUT__.json" -- Name of the output buffer
+vim.g.vrc_auto_format_response_patterns = {
+  json = "jq",                                   -- Use `jq` for JSON formatting
+}
+
+-- Sync Neovim's $PATH with the system's $PATH
+vim.opt.shell = "bash" -- or your preferred shell
+vim.opt.shellcmdflag = "-c"
+vim.env.PATH = vim.fn.getenv("PATH")

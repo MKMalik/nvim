@@ -26,10 +26,12 @@ return {
       dashboard.button("r", "  Recent files", ":Telescope oldfiles <CR>"),
       dashboard.button("g", "  Find text", ":Telescope live_grep <CR>"),
       dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
+      dashboard.button("a", "  Alacritty Configuration", ":e ~/.config/alacritty/alacritty.yml <CR>"),
       dashboard.button("t", "  Tmux Configuration", ":e ~/.tmux.conf <CR>"),
       dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
     }
 
+    local theme = 'hyper';
     -- Function to get the current date and time
     local function get_time()
       return os.date("%I:%M %p     %d %b %Y")
@@ -40,7 +42,13 @@ return {
 
     -- Update the footer every second
     vim.loop.new_timer():start(0, 1000, vim.schedule_wrap(function()
-      dashboard.section.footer.val = get_time()
+      dashboard.section.footer.val = {
+        "",
+        "",
+        "",
+        "",
+        "",
+        get_time(), }
       alpha.redraw()
     end))
     -- Set up alpha configuration

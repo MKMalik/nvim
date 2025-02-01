@@ -254,6 +254,11 @@ local default_plugins = {
   },
   require('custom.harpoon'),
   require('custom.alpha-nvim'),
+  require('custom.db-integration'),
+  require('custom.vim-rest-console'),
+  {
+    "b0o/schemastore.nvim",
+  },
 }
 
 local config = require("core.utils").load_config()
@@ -275,3 +280,13 @@ vim.api.nvim_set_keymap("n", "<leader>FT", "<cmd>FlutterRestart<CR>", { noremap 
 vim.api.nvim_set_keymap("n", "<leader>FD", "<cmd>FlutterDetach<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>Fv", "<cmd>FlutterVisualDebug<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>FT", "<cmd>FlutterLogToggle<CR>", { noremap = true, silent = true })
+
+-- make nvim transparent
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" });
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" });
+
+-- json formating
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.json",
+  command = "set filetype=json"
+})
